@@ -1,0 +1,11 @@
+# Binários compilação local (Caso você rode 'go build' fora do Docker)
+api-server
+*.exe
+bin/
+
+# Configurações do VS Code (Opcional, mas recomendado para manter o repo limpo)
+.vscode/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
