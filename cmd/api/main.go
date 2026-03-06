@@ -10,25 +10,24 @@ import (
 
 	"api-estudo/internal/entities"
 	"api-estudo/internal/helpers"
+	"api-estudo/internal/repository"
 )
 
-var products = map[string]entities.Product{
-	"1": {ID: "1", Name: "Guitarra Fender", Type: "Instrumento", Quantity: 5},
-}
-
 func main() {
+	repo := repository.NewMapProductRepository()
+
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
 	r.Get("/products", func(w http.ResponseWriter, r *http.Request) {
-		helpers.WriteJsonResponse(w, http.StatusOK, products)
+		helpers.WriteJsonResponse(w, http.StatusOK, repo.GetAll())
 	})
 
 	r.Get("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
-		id := chi.URLParam(r, "id") // Extrai o ID da URL usando o recurso do Chi
-		product, ok := products[id] // O "idioma" do Go para verificar se a chave existe
+		id := chi.URLParam(r, "id")
+		product, ok := repo.GetByID(id)
 		if !ok {
 			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto não encontrado"})
 			return
@@ -45,7 +44,7 @@ func main() {
 			return
 		}
 
-		products[newProduct.ID] = newProduct
+		repo.Create(newProduct)
 
 		helpers.WriteJsonResponse(w, http.StatusCreated, newProduct)
 	})
@@ -53,21 +52,20 @@ func main() {
 	r.Put("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
 
-		// Verificamos se o item existe antes de tentar mudar
-		if _, ok := products[id]; !ok {
+		if _, ok := repo.GetByID(id); !ok {
 			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto inexistente"})
 			return
 		}
 
 		var updatedProduct entities.Product
 		if err := json.NewDecoder(r.Body).Decode(&updatedProduct); err != nil {
-			fmt.Println("Erro ao decodificar JSON do PUT:", err) // Log para você ver no terminal
+			fmt.Println("Erro ao decodificar JSON do PUT:", err)
 			helpers.WriteJsonResponse(w, http.StatusBadRequest, map[string]string{"error": "JSON inválido"})
 			return
 		}
 
-		updatedProduct.ID = id        // Forçamos o ID da URL para garantir consistência
-		products[id] = updatedProduct // Atualizamos a "gaveta" correta do mapa
+		updatedProduct.ID = id
+		repo.Update(id, updatedProduct)
 
 		fmt.Printf("Produto %s atualizado com sucesso!\n", id)
 		helpers.WriteJsonResponse(w, http.StatusOK, updatedProduct)
@@ -75,12 +73,12 @@ func main() {
 
 	r.Delete("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
-		if _, ok := products[id]; !ok {
+		if _, ok := repo.GetByID(id); !ok {
 			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto não encontrado"})
 			return
 		}
-		delete(products, id)                // Função nativa do Go para remover de mapas
-		w.WriteHeader(http.StatusNoContent) // 204: Sucesso, mas sem corpo de resposta
+		delete(repo.GetAll(), id)
+		w.WriteHeader(http.StatusNoContent)
 	})
 
 	fmt.Println("API Completa (Ep. 1) rodando na porta 8081...")
