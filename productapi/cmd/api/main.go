@@ -3,21 +3,29 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 
+	"api-estudo/internal/config"
 	"api-estudo/internal/entities"
 	"api-estudo/internal/helpers"
 	"api-estudo/internal/repository"
 )
 
 func main() {
+
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatalf("Erro ao carregar config: %v", err)
+	}
+	fmt.Printf("Conectando ao banco em: %s:%d\n", cfg.Database.Host, cfg.Database.Port)
+
 	repo := repository.NewMapProductRepository()
 
 	r := chi.NewRouter()
-
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
