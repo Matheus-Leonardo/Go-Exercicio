@@ -1,0 +1,6 @@
+database:
+  host: product-db
+  port: 3306
+  user: user
+  password: password
+  name: products_db

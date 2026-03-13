@@ -4,11 +4,11 @@ import "api-estudo/internal/entities"
 
 // ProductRepository define o contrato (interface) do que um repositório de produtos deve fazer.
 type ProductRepository interface {
-	GetAll() map[string]entities.Product
+	GetAll() []entities.Product
 	GetByID(id string) (entities.Product, bool)
-	Create(product entities.Product)
-	Update(id string, product entities.Product)
-	Delete(id string)
+	Create(product entities.Product) error
+	Update(id string, product entities.Product) error
+	Delete(id string) error
 }
 
 // MapProductRepository é a implementação real usando o Mapa na RAM (Mock).
@@ -25,9 +25,12 @@ func NewMapProductRepository() *MapProductRepository {
 	}
 }
 
-// Implementações dos métodos (A lógica que estava na main vem para cá)
-func (r *MapProductRepository) GetAll() map[string]entities.Product {
-	return r.products
+func (r *MapProductRepository) GetAll() []entities.Product {
+	products := []entities.Product{}
+	for _, p := range r.products {
+		products = append(products, p)
+	}
+	return products
 }
 
 func (r *MapProductRepository) GetByID(id string) (entities.Product, bool) {
@@ -35,14 +38,17 @@ func (r *MapProductRepository) GetByID(id string) (entities.Product, bool) {
 	return product, ok
 }
 
-func (r *MapProductRepository) Create(product entities.Product) {
+func (r *MapProductRepository) Create(product entities.Product) error {
 	r.products[product.ID] = product
+	return nil
 }
 
-func (r *MapProductRepository) Update(id string, product entities.Product) {
+func (r *MapProductRepository) Update(id string, product entities.Product) error {
 	r.products[id] = product
+	return nil
 }
 
-func (r *MapProductRepository) Delete(id string) {
+func (r *MapProductRepository) Delete(id string) error {
 	delete(r.products, id)
+	return nil
 }
