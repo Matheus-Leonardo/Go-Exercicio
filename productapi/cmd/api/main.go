@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -32,15 +33,24 @@ func main() {
 		cfg.Database.Name,
 	)
 
-	db, err := sql.Open("mysql", dsn)
+	var db *sql.DB
+
+	for i := 0; i < 10; i++ {
+		db, err = sql.Open("mysql", dsn)
+		if err == nil {
+			if err = db.Ping(); err == nil {
+				log.Println("Conexão com o banco estabelecida!")
+				break
+			}
+		}
+		log.Println("Banco ainda não pronto, tentando novamente...")
+		time.Sleep(5 * time.Second)
+	}
+
 	if err != nil {
-		log.Fatalf("Erro ao abrir banco de dados: %v", err)
+		log.Fatalf("Não foi possível conectar ao banco: %v", err)
 	}
 	defer db.Close()
-
-	if err := db.Ping(); err != nil {
-		log.Fatalf("Banco de dados inacessível: %v", err)
-	}
 
 	repo := repository.NewMySQLProductRepository(db)
 
