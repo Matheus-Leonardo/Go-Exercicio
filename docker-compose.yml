@@ -9,13 +9,14 @@ services:
       - MYSQL_DATABASE=products_db
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
+    volumes:
+      - db_data:/var/lib/mysql
     healthcheck:
-      # Cross-check: Comando para verificar se o MySQL está aceitando conexões
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 20s
+      start_period: 40s
 
   product-api:
     build: ./productapi
@@ -23,11 +24,12 @@ services:
     ports:
       - "8081:8081"
     environment:
-      # Cross-check: Variável 'env' que nosso loader em Go utiliza para carregar 'docker.yml'
       - env=docker
     volumes:
       - ./productapi/configs:/configs
     depends_on:
       product-db:
-        # Cross-check: Condição crucial para evitar erro de 'connection refused' no boot da API
-        condition: service_healthy
+       condition: service_healthy
+
+volumes:
+  db_data:
