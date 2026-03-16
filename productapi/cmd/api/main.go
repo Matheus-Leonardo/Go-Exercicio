@@ -1,21 +1,23 @@
 package main
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
+
+	"api-estudo/internal/config"
+	"api-estudo/internal/database"
+	"api-estudo/internal/entities"
+	"api-estudo/internal/helpers"
+	"api-estudo/internal/repository"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	_ "github.com/go-sql-driver/mysql"
-
-	"api-estudo/internal/config"
-	"api-estudo/internal/entities"
-	"api-estudo/internal/helpers"
-	"api-estudo/internal/repository"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -33,30 +35,24 @@ func main() {
 		cfg.Database.Name,
 	)
 
-	var db *sql.DB
+	mode := os.Getenv("robust") // "robust" ou "simple"
 
-	for i := 0; i < 10; i++ {
-		db, err = sql.Open("mysql", dsn)
-		if err == nil {
-			if err = db.Ping(); err == nil {
-				log.Println("Conexão com o banco estabelecida!")
-				break
-			}
-		}
-		log.Println("Banco ainda não pronto, tentando novamente...")
-		time.Sleep(5 * time.Second)
+	var db *gorm.DB
+	if mode == "robust" {
+		db = database.InitDB(dsn, 10, 10*time.Second)
+	} else {
+		db = database.OpenSimpleDB(dsn)
 	}
 
-	if err != nil {
-		log.Fatalf("Não foi possível conectar ao banco: %v", err)
-	}
-	defer db.Close()
+	defer database.Close(db)
 
 	repo := repository.NewMySQLProductRepository(db)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+
+	log.Println("API inicializada com sucesso!")
 
 	r.Get("/products", func(w http.ResponseWriter, r *http.Request) {
 		helpers.WriteJsonResponse(w, http.StatusOK, repo.GetAll())
