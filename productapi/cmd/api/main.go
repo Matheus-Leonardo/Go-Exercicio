@@ -13,6 +13,7 @@ import (
 	"api-estudo/internal/entities"
 	"api-estudo/internal/helpers"
 	"api-estudo/internal/repository"
+	"api-estudo/internal/service"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -47,6 +48,7 @@ func main() {
 	defer database.Close(db)
 
 	repo := repository.NewMySQLProductRepository(db)
+	svc := service.NewProductService(repo)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
@@ -55,7 +57,7 @@ func main() {
 	log.Println("API inicializada com sucesso!")
 
 	r.Get("/products", func(w http.ResponseWriter, r *http.Request) {
-		helpers.WriteJsonResponse(w, http.StatusOK, repo.GetAll())
+		helpers.WriteJsonResponse(w, http.StatusOK, svc.GetAll())
 	})
 
 	r.Get("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
@@ -75,8 +77,8 @@ func main() {
 			return
 		}
 
-		if err := repo.Create(p); err != nil {
-			helpers.WriteJsonResponse(w, http.StatusInternalServerError, map[string]string{"error": "Erro ao criar produto"})
+		if err := svc.Create(p); err != nil {
+			helpers.WriteJsonResponse(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})
 			return
 		}
 
