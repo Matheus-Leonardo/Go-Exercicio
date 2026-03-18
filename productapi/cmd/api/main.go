@@ -62,8 +62,8 @@ func main() {
 
 	r.Get("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
-		product, ok := repo.GetByID(id)
-		if !ok {
+		product, err := svc.GetByID(id)
+		if err != nil {
 			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto não encontrado"})
 			return
 		}
@@ -93,7 +93,7 @@ func main() {
 			return
 		}
 
-		if err := repo.Update(id, p); err != nil {
+		if err := svc.Update(id, p); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusInternalServerError, map[string]string{"error": "Erro ao atualizar produto"})
 			return
 		}
@@ -103,12 +103,12 @@ func main() {
 
 	r.Delete("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
-		if _, ok := repo.GetByID(id); !ok {
+		if _, err := svc.GetByID(id); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto não encontrado"})
 			return
 		}
 
-		if err := repo.Delete(id); err != nil {
+		if err := svc.Delete(id); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusInternalServerError, map[string]string{"error": "Erro ao deletar produto"})
 			return
 		}
