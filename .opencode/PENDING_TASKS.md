@@ -1,118 +1,108 @@
-# 📌 TAREFAS E CORREÇÕES PENDENTES
+# 📌 TAREFAS PENDENTES
 
 ---
 
-## 🔴 CORREÇÕES CRÍTICAS (Bloqueiam funcionamento)
+## 🔴 CORREÇÃO CRÍTICA (Bloqueia compilação)
 
-### [ ] 1. Criar/Corrigir go.mod com nome correto do módulo
-- **Artigo:** ep5-mysql
-- **Impacto:** Módulos Go não funcionam sem go.mod
-- **Arquivo:** `productapi/go.mod`
+### [ ] 1. CORRIGIR IMPORTS E MÓDULO
+- **Problema:** `go.mod` define `module api-estudo`
+- **Deveria ser:** `github.com/Matheus-Leonardo/Go-Exercicio/productapi`
+- **Arquivos afetados:**
+  - `productapi/go.mod`
+  - `productapi/cmd/api/main.go`
+  - `productapi/internal/config/config.go`
+  - `productapi/internal/service/product_service.go`
+  - `productapi/internal/repository/product_repository.go`
+  - `productapi/internal/repository/mysql_product_repository.go`
 
-### [ ] 2. Corrigir imports em todos os arquivos
-- **Artigo:** ep5-mysql
-- **De:** `api-estudo/internal/...`
-- **Para:** Nome correto do módulo
-- **Arquivos:** Todos os .go
+**Opções de correção:**
+1. Mudar `module api-estudo` para `module github.com/Matheus-Leonardo/Go-Exercicio/productapi` em go.mod
+2. OU manter `module api-estudo` e deixar assim (funciona localmente)
 
-### [ ] 3. Service recebe interface, não ponteiro
-- **Artigo:** ep7-di
-- **Mudar:** `ProductRepository *productrepositories.ProductRepository`
-- **Para:** `productRepository productrepositories.ProductRepository`
-- **Arquivo:** `productapi/internal/product/productdomain/productservices/productservice.go`
+---
 
-### [ ] 4. Criar package producthttp com handlers separados
-- **Artigo:** ep7-di
-- **Descrição:** Mover handlers de main.go para `producthttp/producthttp.go`
-- **Arquivos novos:** `productapi/internal/product/producthttp/producthttp.go`
+## 🟡 MELHORIAS ALTA PRIORIDADE
 
-### [ ] 5. Adicionar context.Context em todas as operações
-- **Artigo:** ep5-mysql e ep7-di
-- **Mudar:** `GetByID(id string)` → `GetByID(ctx context.Context, id string)`
+### [ ] 2. Adicionar context.Context
+- **Descrição:** Passar contexto em todas as operações (melhor cancelamento e timeout)
 - **Arquivos:** repository, service, handlers
 
----
+### [ ] 3. Validação de ID
+- **Descrição:** Retornar 400 Bad Request se ID vazio
+- **Endpoints:** GET, PUT, DELETE /products/{id}
 
-## 🟡 CORREÇÕES ALTAS (Arquitetura/Padrões)
-
-### [ ] 6. Criar package productdecode
-- **Artigo:** ep5-mysql
-- **Descrição:** Funções para decodificar request (URI, body, query)
-- **Arquivo novo:** `productapi/internal/product/productdecode/productdecode.go`
-
-### [ ] 7. Implementar UUID no service.Create()
-- **Artigo:** ep7-di
-- **Descrição:** Gerar ID automaticamente com `uuid.NewUUID()`
-- **Arquivo:** `productapi/internal/product/productdomain/productservices/productservice.go`
-
-### [ ] 8. Handler usar service, não repository direto
-- **Artigo:** ep7-di
-- **Corrigir:** `repo.GetByID()` → `svc.GetByID()`
-- **Arquivo:** `productapi/cmd/main.go`
-
-### [ ] 9. Interface repository no package correto
-- **Artigo:** ep5-mysql
-- **Descrição:** Interface deve estar no domain, implementação no mysql
-- **Arquivos:** `productapi/internal/product/productdomain/productrepositories/`
-
-### [ ] 10. Validação de ID nos handlers
-- **Artigo:** ep5-mysql
-- **Descrição:** Retornar 400 se ID vazio
-- **Arquivo:** `productapi/internal/product/producthttp/producthttp.go`
+### [ ] 4. UUID para novos produtos
+- **Descrição:** Gerar ID automaticamente com `uuid.NewUUID()` no service.Create()
+- **Arquivo:** `productapi/internal/service/product_service.go`
 
 ---
 
-## 🟢 CORREÇÕES MÉDIAS (Qualidade)
+## 🟢 MELHORIAS MÉDIA PRIORIDADE
 
-### [ ] 11. Padronizar respostas JSON
-- **Artigo:** ep5-mysql
-- **Descrição:** Usar package `encode` consistentemente
-- **Arquivo:** `productapi/internal/encode/jsonencode.go`
+### [ ] 5. Testes unitários
+- **Descrição:** Testar service com mock do repository
+- **Ferramenta:** testing package padrão
 
-### [ ] 12. Adicionar middleware Recoverer
-- **Artigo:** ep1-chi
-- **Descrição:** Recuperar de panics graceful
-- **Arquivo:** `productapi/cmd/main.go`
+### [ ] 6. Middleware de logging
+- **Descrição:** Já tem Chi middleware.Logger, mas pode customizar
+
+### [ ] 7. Documentação Swagger
+- **Descrição:** Gerar documentação OpenAPI
+- **Ferramenta:** swaggo/swag
 
 ---
 
-## 🔵 MELHORIAS (Futuro)
-
-### [ ] Escrever testes unitários
-- **Artigo:** ep8-tests
-- **Status:** Pendente
+## 🔵 MELHORIAS FUTURO
 
 ### [ ] Configurar CI/CD com GitHub Actions
-- **Artigo:** ep9-ci-lint-coverage
 - **Status:** Pendente
 
 ### [ ] Adicionar Prometheus metrics
-- **Artigo:** ep10-prometheus
+- **Status:** Pendente
+
+### [ ] Cache de produtos
 - **Status:** Pendente
 
 ---
 
 ## ✅ CONCLUÍDAS
 
-### [x] Verificação do código vs artigo John Fercher
+### [x] CRUD de produtos implementado
 - **Data:** 2026-03-18
-- **Resultado:** 13 problemas encontrados
+- **Endpoints:** GET, GET/:id, POST, PUT, DELETE
 
-### [x] Sistema de persistência de contexto
+### [x] Repository Pattern
 - **Data:** 2026-03-18
+- **Descrição:** Interface + MySQL implementation
 
-### [x] Estrutura base do projeto
+### [x] Service Layer com validação
 - **Data:** 2026-03-18
+- **Descrição:** Valida nome obrigatório
 
-### [x] Repository Pattern implementado
+### [x] Docker Compose
 - **Data:** 2026-03-18
+- **Descrição:** API + MySQL
+
+### [x] GORM (ORM)
+- **Data:** 2026-03-18
+- **Descrição:** Substituiu SQL cru
+
+### [x] Chi Router
+- **Data:** 2026-03-18
+- **Descrição:** Middleware Logger e Recoverer
 
 ---
 
 ## 📊 ORDEM DE CORREÇÃO SUGERIDA
 
 ```
-1º → 2º → 5º → 3º → 6º → 4º → 8º → 9º → 10º → 7º → 11º → 12º
+1º → 1 (CORRIGIR IMPORTS)
+2º → 3 (validar ID)
+3º → 4 (UUID)
+4º → 2 (context.Context)
+5º → 5 (testes)
+6º → 6 (logging customizado)
+7º → 7 (swagger)
 ```
 
 ---
@@ -121,10 +111,11 @@
 
 | Data | Ação | Responsável |
 |------|------|-------------|
+| 2026-03-19 | CRUD implementado + verificação GitHub | opencode |
 | 2026-03-18 | Análise vs artigo John Fercher | opencode |
-| 2026-03-18 | Lista de correções criada | opencode |
+| 2026-03-18 | Repository Pattern implementado | opencode |
+| 2026-03-18 | Docker Compose configurado | opencode |
 
 ---
 
-**Última atualização:** 2026-03-18
-**Referência:** github.com/johnfercher/medium (branches ep5-mysql, ep7-di)
+**Última atualização:** 2026-03-19

@@ -78,7 +78,7 @@ func main() {
 		}
 
 		if err := svc.Create(p); err != nil {
-			helpers.WriteJsonResponse(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})
+			helpers.WriteJsonResponse(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
 			return
 		}
 
@@ -87,17 +87,27 @@ func main() {
 
 	r.Put("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
+
+		// 1. Verificar se existe
+		if _, err := svc.GetByID(id); err != nil {
+			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto não encontrado"})
+			return
+		}
+
+		// 2. Decodificar JSON
 		var p entities.Product
 		if err := json.NewDecoder(r.Body).Decode(&p); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusBadRequest, map[string]string{"error": "JSON inválido"})
 			return
 		}
 
+		// 3. Atualizar
 		if err := svc.Update(id, p); err != nil {
-			helpers.WriteJsonResponse(w, http.StatusInternalServerError, map[string]string{"error": "Erro ao atualizar produto"})
+			helpers.WriteJsonResponse(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
 			return
 		}
 
+		// 4. Sucesso
 		helpers.WriteJsonResponse(w, http.StatusOK, p)
 	})
 

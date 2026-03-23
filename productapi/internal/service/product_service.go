@@ -7,7 +7,6 @@ import (
 	"strings"
 )
 
-// ProductService define o que o negócio espera de um produto
 type ProductService interface {
 	Create(p entities.Product) error
 	GetAll() []entities.Product
@@ -17,7 +16,6 @@ type ProductService interface {
 }
 
 type productService struct {
-	// Cross-check: Depende da interface do repositório, não da implementação MySQL
 	repo repository.ProductRepository
 }
 
