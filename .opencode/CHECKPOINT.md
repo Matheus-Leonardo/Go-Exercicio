@@ -1,6 +1,7 @@
 # ========================================================
-# CHECKPOINT #10
-# Gerado: 2026-03-19
+# CHECKPOINT #11
+# Gerado: 2026-03-30
+# Origem: PC-PESSOAL
 # ========================================================
 
 ## COMO CONTINUAR:
@@ -9,11 +10,22 @@ Depois diga: "Continue do checkpoint #10"
 
 ---
 
+## 🖥️ MÁQUINAS
+
+| Máquina | Descrição | Última Origem |
+|---------|-----------|---------------|
+| PC-PESSOAL | `/home/matheus/dev/Go-Exercicio` | PC-PESSOAL (este checkpoint) |
+| PC-TRABALHO | Segunda máquina | - |
+
+**Origem deste checkpoint:** PC-PESSOAL
+
+---
+
 ## PROJETO
 
 - Nome: Go-Exercicio
 - Stack: Go + MySQL + GORM + Chi Router
-- Diretório: /home/Matheus/dev/Go-Exercicio
+- Diretório: /home/matheus/dev/Go-Exercicio
 - Branch: main
 - Repo: https://github.com/Matheus-Leonardo/Go-Exercicio.git
 

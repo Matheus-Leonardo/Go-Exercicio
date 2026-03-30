@@ -2,6 +2,61 @@
 
 ---
 
+## Sessão: 2026-03-30 (PC-PESSOAL)
+
+### Tópicos Discutidos
+
+#### 1. Configuração de Máquinas
+- **Problema:** Usuário trabalha em duas máquinas diferentes
+- **Solução:** Definir sistema de origem para sincronização
+
+#### 2. Máquinas Registradas
+
+| ID | Nome | Diretório |
+|----|------|-----------|
+| PC-PESSOAL | PC Pessoal | `/home/matheus/dev/Go-Exercicio` |
+| PC-TRABALHO | PC Trabalho | (a definir) |
+
+#### 3. Rotinas Configuradas
+
+| Comando | Ação |
+|---------|------|
+| `load` | Push da pasta `.opencode` para o repositório |
+| `save` | Salvar novas configurações da conversa no perfil (com origem) |
+
+#### 4. Cruzamento de Informações GitHub vs Local
+
+**Diferenças identificadas:**
+- GitHub: CHECKPOINT#10 (2026-03-19)
+- Local: 1 commit à frente do origin
+- Arquivo órfão `product_service.go` vazio na raiz → **REMOVIDO**
+
+### Decisões Tomadas
+
+| # | Decisão | Justificativa |
+|---|---------|---------------|
+| 1 | Criar arquivo MAQUINAS.md | Registrar configuração de máquinas |
+| 2 | Criar SAVE_TEMPLATE.md | Definir modelo de save com origem |
+| 3 | Atualizar CHECKPOINT.md#11 | Incluir informação de máquinas |
+| 4 | Remover arquivo órfão | Manter estrutura limpa |
+
+### Arquivos Criados/Atualizados
+
+| Arquivo | Ação |
+|---------|------|
+| `.opencode/MAQUINAS.md` | Criado - Configuração de máquinas |
+| `.opencode/SAVE_TEMPLATE.md` | Criado - Template de save |
+| `.opencode/CHECKPOINT.md` | Atualizado - CHECKPOINT#11 com origem |
+| `product_service.go` | Removido - Arquivo órfão |
+
+### Estado do Projeto
+
+- **CRUD:** Implementado
+- **Problema crítico:** IMPORTS (`api-estudo` vs `github.com/...`)
+- **Próximo passo:** CORRIGIR IMPORTS
+
+---
+
 ## Sessão: 2026-03-19
 
 ### Tópicos Discutidos
@@ -213,4 +268,4 @@ cat .opencode/CONVERSATION_HISTORY.md
 
 ---
 
-**Última atualização:** 2026-03-19
+**Última atualização:** 2026-03-30 | Origem: PC-PESSOAL
