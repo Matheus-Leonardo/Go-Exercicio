@@ -1,14 +1,17 @@
 package repository
 
-import "api-estudo/internal/entities"
+import (
+	"api-estudo/internal/entities"
+	"context"
+)
 
 // ProductRepository define o contrato (interface) do que um repositório de produtos deve fazer.
 type ProductRepository interface {
-	GetAll() []entities.Product
-	GetByID(id string) (entities.Product, bool)
-	Create(product entities.Product) error
-	Update(id string, product entities.Product) error
-	Delete(id string) error
+	GetAll(ctx context.Context) []entities.Product
+	GetByID(ctx context.Context, id string) (entities.Product, bool)
+	Create(ctx context.Context, product entities.Product) error
+	Update(ctx context.Context, id string, product entities.Product) error
+	Delete(ctx context.Context, id string) error
 }
 
 // MapProductRepository é a implementação real usando o Mapa na RAM (Mock).

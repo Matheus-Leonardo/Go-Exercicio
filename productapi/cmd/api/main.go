@@ -58,12 +58,14 @@ func main() {
 	log.Println("API inicializada com sucesso!")
 
 	r.Get("/products", func(w http.ResponseWriter, r *http.Request) {
-		helpers.WriteJsonResponse(w, http.StatusOK, svc.GetAll())
+		ctx := r.Context()
+		helpers.WriteJsonResponse(w, http.StatusOK, svc.GetAll(ctx))
 	})
 
 	r.Get("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 		id := chi.URLParam(r, "id")
-		product, err := svc.GetByID(id)
+		product, err := svc.GetByID(ctx, id)
 		if err != nil {
 			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto não encontrado"})
 			return
@@ -72,13 +74,14 @@ func main() {
 	})
 
 	r.Post("/products", func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 		var p entities.Product
 		if err := json.NewDecoder(r.Body).Decode(&p); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusBadRequest, map[string]string{"error": "JSON inválido"})
 			return
 		}
 
-		if err := svc.Create(p); err != nil {
+		if err := svc.Create(ctx, p); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
 			return
 		}
@@ -87,10 +90,11 @@ func main() {
 	})
 
 	r.Put("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 		id := chi.URLParam(r, "id")
 
 		// 1. Verificar se existe
-		if _, err := svc.GetByID(id); err != nil {
+		if _, err := svc.GetByID(ctx, id); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto não encontrado"})
 			return
 		}
@@ -103,7 +107,7 @@ func main() {
 		}
 
 		// 3. Atualizar
-		if err := svc.Update(id, p); err != nil {
+		if err := svc.Update(ctx, id, p); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
 			return
 		}
@@ -113,13 +117,14 @@ func main() {
 	})
 
 	r.Delete("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 		id := chi.URLParam(r, "id")
-		if _, err := svc.GetByID(id); err != nil {
+		if _, err := svc.GetByID(ctx, id); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto não encontrado"})
 			return
 		}
 
-		if err := svc.Delete(id); err != nil {
+		if err := svc.Delete(ctx, id); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusInternalServerError, map[string]string{"error": "Erro ao deletar produto"})
 			return
 		}

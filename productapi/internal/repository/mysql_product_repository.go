@@ -2,6 +2,7 @@ package repository
 
 import (
 	"api-estudo/internal/entities"
+	"context"
 
 	"gorm.io/gorm"
 )
@@ -14,37 +15,37 @@ func NewMySQLProductRepository(db *gorm.DB) *MySQLProductRepository {
 	return &MySQLProductRepository{db: db}
 }
 
-func (r *MySQLProductRepository) GetAll() []entities.Product {
+func (r *MySQLProductRepository) GetAll(ctx context.Context) []entities.Product {
 	var products []entities.Product
 
-	if err := r.db.Find(&products).Error; err != nil {
+	if err := r.db.WithContext(ctx).Find(&products).Error; err != nil {
 		return []entities.Product{}
 	}
 	return products
 }
 
-func (r *MySQLProductRepository) GetByID(id string) (entities.Product, bool) {
+func (r *MySQLProductRepository) GetByID(ctx context.Context, id string) (entities.Product, bool) {
 	var p entities.Product
 
-	if err := r.db.First(&p, "id = ?", id).Error; err != nil {
+	if err := r.db.WithContext(ctx).First(&p, "id = ?", id).Error; err != nil {
 		return entities.Product{}, false
 	}
 	return p, true
 }
 
-func (r *MySQLProductRepository) Create(product entities.Product) error {
+func (r *MySQLProductRepository) Create(ctx context.Context, product entities.Product) error {
 
-	return r.db.Create(&product).Error
+	return r.db.WithContext(ctx).Create(&product).Error
 }
 
-func (r *MySQLProductRepository) Update(id string, product entities.Product) error {
+func (r *MySQLProductRepository) Update(ctx context.Context, id string, product entities.Product) error {
 
-	return r.db.Model(&entities.Product{}).
+	return r.db.WithContext(ctx).Model(&entities.Product{}).
 		Where("id = ?", id).
 		Updates(product).Error
 }
 
-func (r *MySQLProductRepository) Delete(id string) error {
+func (r *MySQLProductRepository) Delete(ctx context.Context, id string) error {
 
-	return r.db.Delete(&entities.Product{}, "id = ?", id).Error
+	return r.db.WithContext(ctx).Delete(&entities.Product{}, "id = ?", id).Error
 }

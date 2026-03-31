@@ -196,4 +196,55 @@ repo := NewX(db)  ────────────→ RECEBE db como paramet
 
 ---
 
+## Processo de Validacao de Codigo
+
+### Regra Fundamental
+
+**ANTES DE GERAR QUALQUER CODIGO** que dependa de outros arquivos do projeto:
+
+1. **VERIFICAR** arquivos existentes
+   - Ler os arquivos relevantes do projeto
+   - Entender as assinaturas atuais dos metodos
+
+2. **IDENTIFICAR** dependencias
+   - Quais metodos chamam quais
+   - Quais interfaces precisam mudar em conjunto
+
+3. **GERAR** todas as mudancas juntas
+   - Nao mostrar apenas uma parte
+   - Mostrar TODAS as mudancas necessarias
+   - Garantir consistencia entre as camadas
+
+4. **CONFIRMAR** antes de enviar
+   - Verificar se o codigo vai compilar
+   - Garantir que todas as interfaces batem
+
+---
+
+### Exemplo do Erro a Evitar
+
+```
+❌ ERRADO:
+"Agora o main com ctx fica assim..." (sem verificar service)
+- O service nao tem ctx, codigo nao compila
+
+✅ CORRETO:
+1. "Vou verificar o service primeiro..."
+2. "O service atual nao tem ctx, preciso mudar..."
+3. "Também preciso mudar o repository..."
+4. "Agora sim, vou mostrar TUDO junto"
+```
+
+---
+
+### Checklist de Verificacao
+
+- [ ] Li os arquivos relevantes?
+- [ ] As assinaturas estao corretas?
+- [ ] Todas as camadas estao sendo alteradas?
+- [ ] O codigo esta consistente?
+- [ ] Vai compilar?
+
+---
+
 **Ultima atualizacao:** 2026-03-19
