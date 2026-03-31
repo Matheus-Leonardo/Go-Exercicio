@@ -131,29 +131,119 @@ quero que configure um terceiro comando, o "update", quando eu enviar update voc
 ---
 
 ### Mensagem #5 (2026-03-30 - PC-PESSOAL)
-
 **Usuário:**
 ```
 consegue ir salvando todo conteudo da conversa e depois subir em um push para que, depois seja carregado em qualquer outra maquina que tenha o opencode e seja configurado um agente exatamente como oque estou usando agora orientado as minimas nuances do historico da conversa, considerando até mesmo para contexto todas as perguntas e respostas?
 ```
 
 **Agente:**
-[Esta mensagem sendo registrada]
+[Logging configurado - CONVERSA_ATUAL.md criado]
 
 ---
 
-## RESUMO DA SESSÃO
+### Mensagem #6 (2026-03-30 - PC-PESSOAL)
+**Usuário:**
+```
+ok, voce só atualiza os arquivos para commit quando eu der um save, só envia para o remoto quando eu der um load e so carrega as infos la com a finalidade já definida nessa conversa quando eu der um update. Confirme se esta configurado para seguir estas instruções a risca
+```
 
-### Configurações Definidas:
-1. Sistema de máquinas (PC-PESSOAL / PC-TRABALHO)
-2. Rotinas: `update`, `load`, `save`
-3. Logging completo de conversa
-4. Origem sempre incluida
+**Agente:**
+**Confirmado. Seguindo à risca:**
 
-### Decisões Tomadas:
-- PROIBIDO pull/push automático
-- Cada operação via comando explícito
-- Salvar conversa completa para reprodução de contexto
+| Comando | Ação | O que FAZ | O que NÃO FAZ |
+|---------|------|-----------|---------------|
+| `save` | Salvar | Atualiza arquivos `.opencode/` | Não commita, não push |
+| `load` | Carregar no remote | Commit + Push do `.opencode/` | Não faz pull |
+| `update` | Carregar do remote | Fetch + Pull do `.opencode/` | Não modifica código |
+
+---
+
+### Mensagem #7 (2026-03-30 - PC-PESSOAL)
+**Usuário:**
+```
+se eu enviar somente a palavra "load" na conversa, oque exatamente voce irá fazer?
+```
+
+**Agente:**
+[Explicação detalhada do que load faz]
+
+---
+
+### Mensagem #8 (2026-03-30 - PC-PESSOAL)
+**Usuário:**
+```
+load
+```
+
+**Agente:**
+✅ Push realizado! Commits enviados ao remote.
+
+---
+
+### Mensagem #9 (2026-03-30 - PC-PESSOAL)
+**Usuário:**
+```
+ajuste a configuração para fazer load e update apenas da pasta .opencode. Todas as outras mudanças do codigo devem ser feitas manualmente
+```
+
+**Agente:**
+[ROTINAS.md atualizado - agora deixa claro que load/update operam SOMENTE em .opencode/]
+
+---
+
+### Mensagem #10 (2026-03-30 - PC-PESSOAL)
+**Usuário:**
+```
+vamos analisar handler a handler. no godico do main com o context implementado ao declarar ctx:=r.Context() o compilador retorna um erro de "too many arguments" pesquisando sobre a causa do erro descobri que seria aceitado o svc.GetAll(ctx) com o Context fazendo parte da assinatura do metodo. explique isso e valide se é verdade ou nao
+```
+
+**Agente:**
+✅ **VALIDADO - Você está correto!**
+
+O erro ocorre porque a assinatura atual é `GetAll()` sem parâmetros, mas você passa `ctx`. Para funcionar, todas as camadas precisam ter `context.Context` na assinatura.
+
+| Camada | Atual | Novo |
+|--------|-------|------|
+| Service (interface) | `GetAll()` | `GetAll(ctx context.Context)` |
+| Service (impl) | `GetAll()` | `GetAll(ctx context.Context)` |
+| Repository (interface) | `GetAll()` | `GetAll(ctx context.Context)` |
+| Repository (impl) | `GetAll()` | `GetAll(ctx context.Context)` |
+
+---
+
+### Mensagem #11 (2026-03-30 - PC-PESSOAL)
+**Usuário:**
+`save`
+
+---
+
+### Mensagem #12 (2026-03-30 - PC-PESSOAL)
+**Usuário:**
+`load`
+
+**Agente:**
+Aviso: "Estou em Plan Mode — read-only"
+
+---
+
+### Mensagem #13 (2026-03-30 - PC-PESSOAL)
+**Usuário:**
+`save`
+
+**Agente:**
+Registro da conversa atualizado.
+
+---
+
+## RESUMO DAS MUDANÇAS PENDENTES
+
+**Tarefa:** Implementar context em todas as camadas
+
+### Arquivos a modificar:
+1. `internal/service/product_service.go` - Interface + Impl
+2. `internal/repository/product_repository.go` - Interface
+3. `internal/repository/mysql_product_repository.go` - Impl
+4. `cmd/api/main.go` - Handlers (já mostrado com ctx)
 
 ---
 

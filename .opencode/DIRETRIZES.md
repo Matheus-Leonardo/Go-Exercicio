@@ -22,6 +22,22 @@
 - **NAO rodar comandos de build/teste**
 - Apenas **imprimir comandos** se necessario
 - Guiar, explicar, diagnosticar
+- **SEMPRE incluir imports ou instruções de dependência ao enviar código de implementação**
+
+### 2.1 Regra de Implementação
+**Quando enviar código com nova funcionalidade, sempre incluir:**
+
+1. **Imports necessários** (cabeçalho completo)
+   ```go
+   import (
+       "context"  // já existe no stdlib
+   )
+   ```
+
+2. **Ou instruções de dependência** (se necessário)
+   ```bash
+   go get github.com/alguma/dependencia
+   ```
 
 ### 3. Apos Correcoes
 - **NAO perguntar:** "Quer que eu faca?"
