@@ -28,7 +28,7 @@ func NewMapProductRepository() *MapProductRepository {
 	}
 }
 
-func (r *MapProductRepository) GetAll() []entities.Product {
+func (r *MapProductRepository) GetAll(ctx context.Context) []entities.Product {
 	products := []entities.Product{}
 	for _, p := range r.products {
 		products = append(products, p)
@@ -36,12 +36,12 @@ func (r *MapProductRepository) GetAll() []entities.Product {
 	return products
 }
 
-func (r *MapProductRepository) GetByID(id string) (entities.Product, bool) {
+func (r *MapProductRepository) GetByID(ctx context.Context, id string) (entities.Product, bool) {
 	product, ok := r.products[id]
 	return product, ok
 }
 
-func (r *MapProductRepository) Create(product entities.Product) error {
+func (r *MapProductRepository) Create(ctx context.Context, product entities.Product) error {
 	r.products[product.ID] = product
 	return nil
 }
@@ -51,7 +51,7 @@ func (r *MapProductRepository) Update(id string, product entities.Product) error
 	return nil
 }
 
-func (r *MapProductRepository) Delete(id string) error {
+func (r *MapProductRepository) Delete(ctx context.Context, id string) error {
 	delete(r.products, id)
 	return nil
 }

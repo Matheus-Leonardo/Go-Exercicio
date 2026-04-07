@@ -6,6 +6,7 @@ require github.com/go-chi/chi/v5 v5.2.5
 
 require (
 	github.com/go-sql-driver/mysql v1.9.3
+	github.com/google/uuid v1.6.0
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/gorm v1.31.1

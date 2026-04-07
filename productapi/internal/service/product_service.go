@@ -6,6 +6,8 @@ import (
 	"context"
 	"errors"
 	"strings"
+
+	"github.com/google/uuid"
 )
 
 type ProductService interface {
@@ -26,10 +28,15 @@ func NewProductService(repo repository.ProductRepository) ProductService {
 }
 
 func (s *productService) Create(ctx context.Context, p entities.Product) error {
-	// Remove espaços em branco antes de validar
 	if strings.TrimSpace(p.Name) == "" {
 		return errors.New("O nome do produto é obrigatório")
 	}
+
+	id, err := uuid.NewUUID()
+	if err != nil {
+		return errors.New("erro ao gerar ID")
+	}
+	p.ID = id.String()
 	return s.repo.Create(ctx, p)
 }
 
