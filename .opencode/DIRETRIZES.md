@@ -245,6 +245,52 @@ repo := NewX(db)  ────────────→ RECEBE db como paramet
 - [ ] O codigo esta consistente?
 - [ ] Vai compilar?
 
+## Procedimento Padrao Apos Atendimento
+
+### Regra Fundamental
+
+Ao final de qualquer atendimento (pedido, resposta, duvida, explicacao, etc), executar sempre:
+
+**1. Identificar a tratativa atual**
+- Verificar qual tarefa/pedido esta em andamento
+- Confirmar o status (em progresso, pendente, concluido)
+
+**2. Analisar o que ja foi feito**
+- Listar as alteracoes implementadas na sessao
+- Verificar se todas as camadas foram atualizadas (quando necessario)
+
+**3. Listar o que ainda nao foi feito**
+- Consultar PENDING_TASKS.md para tarefas pendentes
+- Usar o **codigo local como referencia principal**
+- Comparar com o artigo/referencia sendo seguido
+- Identificar dependencias entre as tarefas
+
+**4. Proxima acao**
+- Perguntar: "Qual deve ser a proxima solucao desenvolvida?"
+- Apresentar as opcoes pendentes de forma clara
+- Aguardar decisao do usuario antes de prosseguir
+
+### Parametro de Analise
+
+- **Referencia principal:** Codigo local (arquivos .go do projeto)
+- Comparar funcionalidade vs referencia (artigo, tarefa, etc)
+- Listar apenas o que **NAO** esta implementado ou diferente do esperado
+
+### Exemplo de Formatacao
+
+```
 ---
 
-**Ultima atualizacao:** 2026-03-19
+## FALTANDO IMPLEMENTAR
+
+- [ ] Item 1 (comparacao: referencia tem X, local nao tem)
+- [ ] Item 2 (comparacao: diferente do artigo)
+
+---
+
+ Proxima acao: Qual deve ser a proxima solucao desenvolvida?
+```
+
+---
+
+**Ultima atualizacao:** 2026-04-08
