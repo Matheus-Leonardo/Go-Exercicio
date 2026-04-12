@@ -2,18 +2,18 @@
 
 ## Máquinas Registradas
 
-| ID | Nome | Descrição | Última Sincronização |
-|----|------|-----------|---------------------|
-| PC-PESSOAL | PC Pessoal | Máquina atual (home/matheus/dev) | 2026-03-30 |
-| PC-TRABALHO | PC Trabalho | Segunda máquina | - |
+| ID | Nome | Hostname | Descrição | Última Sincronização |
+|----|------|----------|-----------|---------------------|
+| PC-PESSOAL | PC Pessoal | - | Máquina pessoal (home/matheus/dev) | 2026-03-30 |
+| PC-TRABALHO | PC Trabalho | RASTREAMENTO6 | Máquina do trabalho (~/dev) | 2026-04-08 |
 
 ---
 
 ## Configuração Atual
 
-**Esta Sessão:** PC Pessoal
+**Esta Sessão:** PC-TRABALHO
 
-**Diretório Principal:** `/home/matheus/dev/Go-Exercicio`
+**Diretório Principal:** `~/dev/Go-Exercicio`
 
 ---
 
@@ -34,4 +34,4 @@
 
 ---
 
-**Atualizado:** 2026-03-30 | Origem: PC-PESSOAL
+**Atualizado:** 2026-04-08 | Origem: PC-TRABALHO

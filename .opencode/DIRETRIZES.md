@@ -16,6 +16,9 @@
 - Usar metaforas e analogias do dia a dia
 - Partir do ponto onde a informacao nasce ate o erro
 - Nao explicar de forma abstrata ou puramente teorica
+- **IDIOMA:** Explicar sempre em portugues brasileiro nativo
+- **TERMOS TECNICOS:** Quando necessario usar termo em ingles (ex: endpoint, array, mock), manter em ingles entre aspas
+- **CARACTERES ESTRANGEIROS:** NAO usar caracteres de outros idiomas (ex: chines, japones, coreano, simbolosunicode) em nenhuma parte do texto
 
 ### 2. Codigo
 - **NAO editar arquivos diretamente**
@@ -266,9 +269,11 @@ Ao final de qualquer atendimento (pedido, resposta, duvida, explicacao, etc), ex
 - Identificar dependencias entre as tarefas
 
 **4. Proxima acao**
-- Perguntar: "Qual deve ser a proxima solucao desenvolvida?"
-- Apresentar as opcoes pendentes de forma clara
-- Aguardar decisao do usuario antes de prosseguir
+ - Perguntar: "Qual deve ser a proxima solucao desenvolvida?"
+ - Apresentar as opcoes pendentes de forma clara
+ - Aguardar decisao do usuario antes de prosseguir
+ - USAR EXATAMENTE o texto: " Proxima acao: Qual deve ser a proxima solucao desenvolvida?"
+ - NAO usar perguntas diferentes como "quer que eu...?" ou "está correto?"
 
 ### Parametro de Analise
 
@@ -278,18 +283,22 @@ Ao final de qualquer atendimento (pedido, resposta, duvida, explicacao, etc), ex
 
 ### Exemplo de Formatacao
 
+Aps qualquer atendimento, sempre presentar lista do que falta implementar conforme objetivo estabelecido:
+
 ```
 ---
 
 ## FALTANDO IMPLEMENTAR
 
-- [ ] Item 1 (comparacao: referencia tem X, local nao tem)
-- [ ] Item 2 (comparacao: diferente do artigo)
+- [ ] Item 1 (referencia: artigo tem X, local nao tem)
+- [ ] Item 2 (referencia: diferenca do esperado)
 
 ---
 
  Proxima acao: Qual deve ser a proxima solucao desenvolvida?
 ```
+
+**IMPORTANTE:** A lista deve apresentar apenas o que NAO foi feito ainda. Nao repetir itens ja implementados.
 
 ---
 
