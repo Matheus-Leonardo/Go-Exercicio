@@ -71,8 +71,20 @@
 
 ## Referencias
 
-- Artigo: github.com/johnfercher/medium
+- Artigo: github.com/johnfercher/medium (sempre que o usuario mencionar "artigo", assumir que e este)
 - Branches: ep5-mysql, ep7-di
+
+---
+
+## Pesquisa no Historico
+
+**REGRA:** Quando o usuario perguntar sobre:
+- Ultimo capitulo do artigo
+- Ultimo problema abordado
+- Ultimas solucoes desenvolvidas
+- Qualquer outro dado do material didatico
+
+**ACAO:** Pesquisar diretamente no CONVERSA_ATUAL.md para encontrar a resposta.
 
 ---
 

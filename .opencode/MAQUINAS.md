@@ -5,7 +5,15 @@
 | ID | Nome | Hostname | Descrição | Última Sincronização |
 |----|------|----------|-----------|---------------------|
 | PC-PESSOAL | PC Pessoal | - | Máquina pessoal (home/matheus/dev) | 2026-03-30 |
-| PC-TRABALHO | PC Trabalho | RASTREAMENTO6 | Máquina do trabalho (~/dev) | 2026-04-08 |
+| PC-TRABALHO | PC Trabalho | Kuterr | Máquina do trabalho (~/dev) | 2026-04-12 |
+
+---
+
+## Identificação da Máquina Atual
+
+**Hostname:** Kuterr
+**Máquina identificada:** PC-TRABALHO
+**Última atualização deste registro:** PC-TRABALHO
 
 ---
 

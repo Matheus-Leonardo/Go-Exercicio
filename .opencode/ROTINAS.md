@@ -54,13 +54,31 @@ git push origin main
 
 ---
 
-### 3. `save` - Salvar Configurações Localmente
-```bash
-# Atualizar arquivos de contexto com novas configurações
-# Incluir campo "origem: PC-PESSOAL"
+### 3. `save` - Salvar Configurações e Conversa Localmente
+
+**Fases do comando:**
 ```
+Fase 1: Salvar conversa na integra
+  - Atualizar CONVERSA_ATUAL.md com todas as mensagens da sessao
+  - Incluir origem: [identificacao da maquina atual]
+
+Fase 2: Salvar configuracoes
+  - Atualizar DIRETRIZES.md se houver mudancas
+  - Atualizar PENDING_TASKS.md se necessario
+  - Atualizar CHECKPOINT.md se necessario
+
+Fase 3: Identificar maquina
+  - Identificar hostname atual
+  - Vincular origem ao hostname registrado
+```
+
 **Quando:** Usuário envia "save"
 **Alcance:** Arquivos em `.opencode/` (local)
+**Importante:** Save da conversa deve ser feito INDEPENDENTE da maquina
+
+---
+
+**REGRA CRITICA:** O save da conversa na integra (CONVERSA_ATUAL.md) deve ser feito no processo de "save" INDEPENDENTE da maquina. Este e um processo automatico que NAO depende de onde o save esta sendo executado.
 
 ---
 
