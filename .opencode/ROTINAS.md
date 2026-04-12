@@ -6,18 +6,39 @@
 
 **⚠️ IMPORTANTE:** `load` e `update` operam SOMENTE na pasta `.opencode/`. Todas as outras mudanças de código do projeto são manuais.
 
+**⚠️ REGRA CRÍTICA:** A única pergunta final permitida após qualquer interação é:
+```
+"Próxima ação: Qual deve ser a próxima solução desenvolvida?"
+```
+Nenhuma outra pergunta deve ser feita. Esta é a única pergunta aceita.
+
 ---
 
 ## COMANDOS DISPONÍVEIS
 
 ### 1. `update` - Sincronizar .opencode/ do Remote
-```bash
-git fetch origin
-git checkout origin/main -- .opencode/
+
+**Fases do comando:**
 ```
+Fase 1: Baixar alterações do remote
+  git fetch origin
+  git checkout origin/main -- .opencode/
+
+Fase 2: Verificar diretrizes (OBRIGATÓRIO)
+  - Ler DIRETRIZES.md atualizado
+  - Identificar novas diretrizes não aplicadas
+  - Implementar imediatamente qualquer mudança
+
+Fase 3: Confirmar
+  - Listar novas diretrizes incorporadas
+  - Perguntar: "Próxima ação: Qual deve ser a próxima solução desenvolvida?"
+```
+
 **Quando:** Usuário envia "update"
 **Alcance:** Apenas pasta `.opencode/`
 **Código do projeto:** NÃO afetado
+
+**⚠️ IMPORTANTE:** Após baixar, SEMPRE verificar e implementar mudanças nas diretrizes antes de prosseguir.
 
 ---
 

@@ -235,6 +235,20 @@ Registro da conversa atualizado.
 
 ---
 
+### Mensagem #14 (PC-PESSOAL)
+
+**Usuário:**
+```
+A sua unica pergunta final deve ser a já estabelecida em suas diretrizes, qualquer outra deve ser considerada não aceitada. após estabeleer isso como parametro critico, rode o comando save
+```
+
+**Agente:**
+[ROTINAS.md atualizado - Regra crítica adicionada]
+[CONVERSA_ATUAL.md atualizado]
+[Commit + Push executado]
+
+---
+
 ## RESUMO DAS MUDANÇAS PENDENTES
 
 **Tarefa:** Implementar context em todas as camadas
@@ -247,4 +261,4 @@ Registro da conversa atualizado.
 
 ---
 
-**Última atualização:** 2026-03-30 | Origem: PC-PESSOAL
+**Última atualização:** 2026-04-12 | Origem: PC-PESSOAL
