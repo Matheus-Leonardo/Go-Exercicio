@@ -4,22 +4,22 @@
 
 | ID | Nome | Hostname | Descrição | Última Sincronização |
 |----|------|----------|-----------|---------------------|
-| PC-PESSOAL | PC Pessoal | - | Máquina pessoal (home/matheus/dev) | 2026-03-30 |
-| PC-TRABALHO | PC Trabalho | Kuterr | Máquina do trabalho (~/dev) | 2026-04-12 |
+| PC-PESSOAL | PC Pessoal | Kuterr | Máquina pessoal (~/dev) | 2026-04-12 |
+| PC-TRABALHO | PC Trabalho | - | Máquina do trabalho | - |
 
 ---
 
 ## Identificação da Máquina Atual
 
 **Hostname:** Kuterr
-**Máquina identificada:** PC-TRABALHO
-**Última atualização deste registro:** PC-TRABALHO
+**Máquina identificada:** PC-PESSOAL
+**Última atualização deste registro:** PC-PESSOAL
 
 ---
 
 ## Configuração Atual
 
-**Esta Sessão:** PC-TRABALHO
+**Esta Sessão:** PC-PESSOAL
 
 **Diretório Principal:** `~/dev/Go-Exercicio`
 
@@ -42,4 +42,4 @@
 
 ---
 
-**Atualizado:** 2026-04-08 | Origem: PC-TRABALHO
+**Atualizado:** 2026-04-12 | Origem: PC-PESSOAL

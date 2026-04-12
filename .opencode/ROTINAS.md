@@ -103,4 +103,4 @@ Fase 3: Identificar maquina
 
 ---
 
-**Última atualização:** 2026-03-30 | Origem: PC-PESSOAL
+**Última atualização:** 2026-04-12 | Origem: PC-PESSOAL
