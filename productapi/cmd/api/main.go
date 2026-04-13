@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"api-estudo/internal/config"
@@ -59,12 +60,23 @@ func main() {
 
 	r.Get("/products", func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
-		helpers.WriteJsonResponse(w, http.StatusOK, svc.GetAll(ctx))
+		productType := r.URL.Query().Get("type")
+
+		if productType == "" {
+			helpers.WriteJsonResponse(w, http.StatusOK, svc.GetAll(ctx))
+		} else {
+			helpers.WriteJsonResponse(w, http.StatusOK, svc.Search(ctx, productType))
+		}
+
 	})
 
 	r.Get("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		id := chi.URLParam(r, "id")
+		if strings.TrimSpace(id) == "" {
+			helpers.WriteJsonResponse(w, http.StatusBadRequest, map[string]string{"error": "ID é obrigatório"})
+			return
+		}
 		product, err := svc.GetByID(ctx, id)
 		if err != nil {
 			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto não encontrado"})
@@ -92,8 +104,10 @@ func main() {
 	r.Put("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		id := chi.URLParam(r, "id")
-
-		// 1. Verificar se existe
+		if strings.TrimSpace(id) == "" {
+			helpers.WriteJsonResponse(w, http.StatusBadRequest, map[string]string{"error": "ID é obrigatório"})
+			return
+		}
 		if _, err := svc.GetByID(ctx, id); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto não encontrado"})
 			return
@@ -119,6 +133,10 @@ func main() {
 	r.Delete("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		id := chi.URLParam(r, "id")
+		if strings.TrimSpace(id) == "" {
+			helpers.WriteJsonResponse(w, http.StatusBadRequest, map[string]string{"error": "ID é obrigatório"})
+			return
+		}
 		if _, err := svc.GetByID(ctx, id); err != nil {
 			helpers.WriteJsonResponse(w, http.StatusNotFound, map[string]string{"error": "produto não encontrado"})
 			return

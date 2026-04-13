@@ -1,0 +1,20 @@
+#!/bin/bash
+# Script para listar tarefas pendentes antes da pergunta final
+# Uso: Executar antes de enviar "Proxima acao: ..."
+
+echo ""
+echo "============================================"
+echo "📋 TAREFAS ESTABELECIDAS - CAPITULO 6"
+echo "============================================"
+echo ""
+echo "| # | Tarefa                      | Status    |"
+echo "|---|-----------------------------|-----------|"
+echo "| 1 | Search com filtro           | [PENDING] |"
+echo "| 2 | Validacao de ID vazio      | [PENDING] |"
+echo "| 3 | Atualizacao parcial         | [PENDING] |"
+echo "| 4 | Logging customizado         | [PENDING] |"
+echo ""
+echo "============================================"
+echo ""
+echo "  Proxima acao: Qual deve ser a proxima solucao desenvolvida?"
+echo ""

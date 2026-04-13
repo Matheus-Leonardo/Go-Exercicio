@@ -270,22 +270,33 @@ Ao final de qualquer atendimento (pedido, resposta, duvida, explicacao, etc), ex
 - Verificar qual tarefa/pedido esta em andamento
 - Confirmar o status (em progresso, pendente, concluido)
 
-**2. Analisar o que ja foi feito**
+**2. Verificar estado atual do codigo (OBRIGATORIO)**
+- Ler os arquivos .go relevantes
+- Comparar com o que foi estabelecido como tarefa
+- Identificar o que foi implementado vs pendente
+- Usar o **codigo local como unica referencia de verdade**
+
+**3. Analisar o que ja foi feito**
 - Listar as alteracoes implementadas na sessao
 - Verificar se todas as camadas foram atualizadas (quando necessario)
 
-**3. Listar o que ainda nao foi feito**
+**4. Listar o que ainda nao foi feito**
 - Consultar PENDING_TASKS.md para tarefas pendentes
 - Usar o **codigo local como referencia principal**
 - Comparar com o artigo/referencia sendo seguido
 - Identificar dependencias entre as tarefas
 
-**4. Proxima acao**
- - Perguntar: "Qual deve ser a proxima solucao desenvolvida?"
- - Apresentar as opcoes pendentes de forma clara
- - Aguardar decisao do usuario antes de prosseguir
- - USAR EXATAMENTE o texto: " Proxima acao: Qual deve ser a proxima solucao desenvolvida?"
- - NAO usar perguntas diferentes como "quer que eu...?" ou "está correto?"
+**5. Proxima acao**
+  - Executar script listar_tarefas.sh para exibir tarefas pendentes
+  - **ANTES de exibir status, verificar codigo local**
+  - Marcar tarefas ja implementadas com [DONE]
+  - Marcar tarefas pendentes com [PENDING]
+  - Marcar tarefas parcialmente implementadas com [PARTIAL] + observacao
+  - Perguntar: "Qual deve ser a proxima solucao desenvolvida?"
+  - Apresentar as opcoes pendentes de forma clara
+  - Aguardar decisao do usuario antes de prosseguir
+  - USAR EXATAMENTE o texto: " Proxima acao: Qual deve ser a proxima solucao desenvolvida?"
+  - NAO usar perguntas diferentes como "quer que eu...?" ou "está correto?"
 
 ### Parametro de Analise
 

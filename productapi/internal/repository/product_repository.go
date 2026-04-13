@@ -8,6 +8,7 @@ import (
 // ProductRepository define o contrato (interface) do que um repositório de produtos deve fazer.
 type ProductRepository interface {
 	GetAll(ctx context.Context) []entities.Product
+	Search(ctx context.Context, productType string) []entities.Product
 	GetByID(ctx context.Context, id string) (entities.Product, bool)
 	Create(ctx context.Context, product entities.Product) error
 	Update(ctx context.Context, id string, product entities.Product) error
@@ -36,6 +37,16 @@ func (r *MapProductRepository) GetAll(ctx context.Context) []entities.Product {
 	return products
 }
 
+func (r *MapProductRepository) Search(ctx context.Context, productType string) []entities.Product {
+	var products []entities.Product
+	for _, product := range r.products {
+		if product.Type == productType {
+			products = append(products, product)
+		}
+	}
+	return products
+}
+
 func (r *MapProductRepository) GetByID(ctx context.Context, id string) (entities.Product, bool) {
 	product, ok := r.products[id]
 	return product, ok
@@ -46,7 +57,7 @@ func (r *MapProductRepository) Create(ctx context.Context, product entities.Prod
 	return nil
 }
 
-func (r *MapProductRepository) Update(id string, product entities.Product) error {
+func (r *MapProductRepository) Update(ctx context.Context, id string, product entities.Product) error {
 	r.products[id] = product
 	return nil
 }

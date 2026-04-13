@@ -23,7 +23,14 @@ func (r *MySQLProductRepository) GetAll(ctx context.Context) []entities.Product 
 	}
 	return products
 }
+func (r *MySQLProductRepository) Search(ctx context.Context, productType string) []entities.Product {
+	var products []entities.Product
 
+	if err := r.db.WithContext(ctx).Where("type = ?", productType).Find(&products).Error; err != nil {
+		return []entities.Product{}
+	}
+	return products
+}
 func (r *MySQLProductRepository) GetByID(ctx context.Context, id string) (entities.Product, bool) {
 	var p entities.Product
 

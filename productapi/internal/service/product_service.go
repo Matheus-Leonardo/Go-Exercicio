@@ -13,6 +13,7 @@ import (
 type ProductService interface {
 	Create(ctx context.Context, p entities.Product) error
 	GetAll(ctx context.Context) []entities.Product
+	Search(ctx context.Context, productType string) []entities.Product
 	GetByID(ctx context.Context, id string) (entities.Product, error)
 	Update(ctx context.Context, id string, p entities.Product) error
 	Delete(ctx context.Context, id string) error
@@ -49,6 +50,10 @@ func (s *productService) GetByID(ctx context.Context, id string) (entities.Produ
 		return entities.Product{}, errors.New("produto não encontrado")
 	}
 	return product, nil
+}
+
+func (s *productService) Search(ctx context.Context, productType string) []entities.Product {
+	return s.repo.Search(ctx, productType)
 }
 
 func (s *productService) Update(ctx context.Context, id string, p entities.Product) error {

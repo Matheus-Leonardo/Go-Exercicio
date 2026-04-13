@@ -333,15 +333,188 @@ Precisa editar a idetificcação dessa maquina, se o dado que diferencia essa ma
 
 ---
 
-## RESUMO DAS MUDANÇAS PENDENTES
+### Mensagem #21 (PC-PESSOAL)
 
-**Tarefa:** Implementar context em todas as camadas
+**Usuário:**
+```
+verifique o capitulo 6 do artigo e liste as diferenças entre oque é implementado nesse capitulo e oque existe no meu codigo
+```
 
-### Arquivos a modificar:
-1. `internal/service/product_service.go` - Interface + Impl
-2. `internal/repository/product_repository.go` - Interface
-3. `internal/repository/mysql_product_repository.go` - Impl
-4. `cmd/api/main.go` - Handlers (ja mostrado com ctx)
+**Agente:**
+Artigo 6 encontrado: Go + GORM.
+
+Diferenças identificadas:
+1. Search com filtro - nao implementado
+2. Validacao de ID vazio - nao implementado
+3. Atualizacao parcial - nao implementado
+4. Logging customizado - nao implementado
+
+---
+
+### Mensagem #22 (PC-PESSOAL)
+
+**Usuário:**
+```
+ok, considere todos os itens confirmados e considere eles como ultimas "feat" em implementação.
+```
+
+**Agente:**
+Tarefas estabelecidas para implementacao.
+
+---
+
+### Mensagem #23 (PC-PESSOAL)
+
+**Usuário:**
+```
+vamos tratar um item por vez começando pelo search com filtro, imprima as mudanças nescessarias no codigo comentando como e porque funciona cada mudança
+```
+
+**Agente:**
+[Impresso codigo comentado para Search com filtro em todas as camadas]
+
+---
+
+### Mensagem #24 (PC-PESSOAL)
+
+**Usuário:**
+```
+parece que no item 2 MapProductRepository existem erros de logica e sintaxe verifique se copila
+```
+
+**Agente:**
+Erros identificados e corrigidos no codigo local.
+
+---
+
+### Mensagem #25 (PC-PESSOAL)
+
+**Usuário:**
+```
+voce esta ignorando a diretriz que dtermina a verificação da funcionalidade do codigo enviado como solução, voce deve fazer verificações como essa antes de imprimir para mim
+```
+
+**Agente:**
+[Diretriz reforcada sobre verificacao antes de enviar codigo]
+
+---
+
+### Mensagem #26 (PC-PESSOAL)
+
+**Usuário:**
+```
+No mesmo diretorio que esta salvo a determinação sobre a ultima pergunta que voce faz sempre que responde algo, voce deve criar um script que antes de enviar a pergunta "Proxima ação: Qual deve ser a próxima solução desenvolvida?" voce deve listar quais foram as ultimas tarefas determinadas e marcar quais foram feitas ou não.
+```
+
+**Agente:**
+[Script listar_tarefas.sh criado]
+[Diretrizes atualizadas]
+[TASKS_CAP6.md criado]
+
+---
+
+### Mensagem #27 (PC-PESSOAL)
+
+**Usuário:**
+```
+E se eu quiser filtrar por outro parametro que não seja Type é só trocar a palavra Type por outro parametro da tabela?
+```
+
+**Agente:**
+Sim, e mostrado como implementar filtro generico com multiplos parametros.
+
+---
+
+### Mensagem #28 (PC-PESSOAL)
+
+**Usuário:**
+```
+note que na sua implementação do search voce indica que é só editar o handler GET existente, inclusive mudando de r.Get("/products/{id}", para r.Get("/products",. Afonso, devem existir dois get's (um com search e outro sem) ou só um dado a discrepancia dos dois exemplos enviados?
+```
+
+**Agente:**
+Explicado: apenas UM handler GET /products com if/else para verificar se tem parametro type.
+
+---
+
+### Mensagem #29 (PC-PESSOAL)
+
+**Usuário:**
+```
+A questão é que na implementação da validação de ID voce voltou a imprimir o {id} depois de products logo no inicio da func. Fiquei na duvida de esse {id} deve mesmo ficar no codigo ou não e porque
+```
+
+**Agente:**
+Explicado que {id} deve ficar nas rotas que precisam de ID especifico.
+
+---
+
+### Mensagem #30 (PC-PESSOAL)
+
+**Usuário:**
+```
+Então eu devo ter um handler com {id} e outro sem?
+```
+
+**Agente:**
+SIM, dois handlers: GET /products (lista/filta) e GET /products/{id} (busca especifico).
+
+---
+
+### Mensagem #31 (PC-PESSOAL)
+
+**Usuário:**
+```
+Duas questoes, primeiro nao me parece logico implementar essa verificação de id no Put, como ele funcionaria no Put de fato? E a outra questão é que diante da quantidade de if's nao me parecece um codigo escrito com base em objetcs calystenics
+```
+
+**Agente:**
+1. PUT nao precisa validacao - Chi trata automaticamente.
+2. Codigo precisa refatoracao para Objects Calisthenics.
+
+---
+
+### Mensagem #32 (PC-PESSOAL)
+
+**Usuário:**
+```
+Me parece que essa tratativa por id ja esta estabelecida em todos os handles. Releia o main.go e verifique de fato onde a falta do id na requisição ainda não é tratada
+```
+
+**Agente:**
+Verificado: GET /products/{id} tem validacao, PUT e DELETE nao tem.
+
+---
+
+### Mensagem #33 (PC-PESSOAL)
+
+**Usuário:**
+```
+Agora preciso saber oque é a Atualização parcial, pra que serve, como funciona e como implementar
+```
+
+**Agente:**
+[Explicacao completa sobre atualizacao parcial com GORM - Updates(struct) vs Updates(map)]
+
+---
+
+### Mensagem #34 (PC-PESSOAL)
+
+**Usuário:**
+```
+save
+```
+
+---
+
+## RESUMO DAS TAREFAS - CAPITULO 6
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| 1 | Search com filtro | [DONE] |
+| 2 | Validacao de ID vazio | [DONE] |
+| 3 | Atualizacao parcial | [PENDING] |
+| 4 | Logging customizado | [PENDING] |
 
 ---
 
